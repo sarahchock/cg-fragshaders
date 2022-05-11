@@ -11,5 +11,6 @@ uniform sampler2D image;
 out vec4 FragColor;
 
 void main() {
+    //ideas: glitter/sparkly, melting, yassify, swiping through
     FragColor = texture(image, texcoord);
 }
