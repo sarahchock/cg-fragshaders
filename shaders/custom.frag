@@ -15,32 +15,40 @@ int isBright(vec4 col);
 void main() 
 {
     int bright = isBright(texture(image, texcoord));
-    float length = mod(time + sin((texcoord.x + texcoord.y)) * 5.0, 10.0);
+    float length = mod(time, 10.0);
     int new = int(length);
     if(bright == 0)
     {
         FragColor = texture(image, texcoord);
-        for(int j = 0; j < new; j++)
+        for(int j = 0; j < 2*new; j++)
         {
             float jf = float(j);
+            float reverse = 0.0;
+            if(j >= new)
+            {
+                reverse = jf / 2.0;
+                jf = length - 1.0;
+            }
+
+            
             for(int i = 0; i < 4; i++)
             {
                 vec2 temp;
                 if(i == 0)
                 {
-                    temp = vec2(texcoord.x + jf *1.0/width, texcoord.y + jf *1.0/height);
+                    temp = vec2(texcoord.x + (jf - reverse) * 1.0/width, texcoord.y + (jf - reverse) *1.0/height);
                 }
                 else if(i == 1)
                 {
-                    temp = vec2(texcoord.x - jf *1.0/width, texcoord.y + jf *1.0/height);
+                    temp = vec2(texcoord.x - (jf - reverse) *1.0/width, texcoord.y + (jf - reverse) *1.0/height);
                 }
                 else if(i == 2)
                 {
-                    temp = vec2(texcoord.x - jf *1.0/width, texcoord.y - jf *1.0/height);
+                    temp = vec2(texcoord.x - (jf - reverse) *1.0/width, texcoord.y - (jf - reverse) *1.0/height);
                 }
                 else
                 {
-                    temp = vec2(texcoord.x + jf *1.0/width, texcoord.y - jf *1.0/height); 
+                    temp = vec2(texcoord.x + (jf - reverse) *1.0/width, texcoord.y - (jf - reverse) *1.0/height); 
                 }
                 if(isBright(texture(image, temp)) == 1)
                 {
