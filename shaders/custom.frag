@@ -11,13 +11,14 @@ uniform sampler2D image;
 
 out vec4 FragColor;
 int isBright(vec4 col);
+int isAlone();
 
 void main() 
 {
     int bright = isBright(texture(image, texcoord));
     float length = mod(time, 10.0);
     int new = int(length);
-    if(bright == 0)
+    if((bright == 0))
     {
         FragColor = texture(image, texcoord);
         for(int j = 0; j < 2*new; j++)
@@ -26,8 +27,8 @@ void main()
             float reverse = 0.0;
             if(j >= new)
             {
-                reverse = jf / 2.0;
-                jf = length - 1.0;
+                reverse = mod(jf, length);
+                jf = length;
             }
 
             
